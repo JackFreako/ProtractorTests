@@ -7,6 +7,6 @@
     "chromedriver": "2.33.1"
   },
   "scripts": {
-    "test": "protractor ci.conf.js"
+    "test": "./node_modules/.bin/protractor local.conf.js"
   }
 }
