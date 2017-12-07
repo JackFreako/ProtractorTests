@@ -1,0 +1,8 @@
+FROM selenium/standalone-chrome-debug:3.8.1
+RUN sudo apt-get -y update && \
+    sudo apt-get install -y nodejs curl && \
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash && \
+    sudo apt-get install -y npm
+COPY . ./code
+RUN sudo npm install
+WORKDIR /code

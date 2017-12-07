@@ -1,0 +1,29 @@
+FROM openjdk:8u121-jdk
+
+ENV CHROME_PACKAGE="google-chrome-stable_59.0.3071.115-1_amd64.deb" NODE_PATH=/usr/local/lib/node_modules
+
+# Debian package configuration use the noninteractive frontend: It never interacts with the user at all, and makes the default answers be used for all questions.
+# http://manpages.ubuntu.com/manpages/wily/man7/debconf.7.html
+ENV DEBIAN_FRONTEND noninteractive
+
+# Update is used to resynchronize the package index files from their sources. An update should always be performed before an upgrade.
+RUN apt-get update -qqy && \
+    apt-get -qqy install apt-utils wget xvfb sudo curl python python-pip build-essential uuid-runtime moreutils jq apt-transport-https ca-certificates gnupg2 software-properties-common \
+      fonts-ipafont-gothic xfonts-100dpi xfonts-75dpi xfonts-cyrillic xfonts-scalable libfreetype6 libfontconfig && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
+    apt-get update && \
+    wget https://github.com/webnicer/chrome-downloads/raw/master/x64.deb/${CHROME_PACKAGE} && \
+    dpkg --unpack ${CHROME_PACKAGE} && \
+    apt-get install -f -y
+
+# Nodejs 6 with npm install
+# https://github.com/nodesource/distributions#installation-instructions
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+RUN apt-get update -qqy \
+  && apt-get -qqy install nodejs
+
+COPY . /code
+WORKDIR /code/
+RUN npm install
+ENTRYPOINT ["./entrypoint.sh"]                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
