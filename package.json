@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "An example on how to use Protractor",
   "dependencies": {
+    "geckodriver": "^1.10.0",
     "protractor": "5.1.2"
   },
   "scripts": {
