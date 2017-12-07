@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "description": "An example on how to use Protractor",
   "dependencies": {
-    "protractor": "5.1.2",
-    "chromedriver": "2.33.1"
+    "protractor": "5.1.2"
   },
   "scripts": {
-    "pretest": "npm install",
+    "pretest": "npm install && ./node_modules/.bin/webdriver-manager update",
     "test": "./node_modules/.bin/protractor config/direct-connect.conf.js",
     "chrome-headless": "./node_modules/.bin/protractor config/chrome-headless.conf.js",
     "sel-grid": "./node_modules/.bin/protractor config/selenium-grid.conf.js"
